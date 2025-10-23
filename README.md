@@ -182,6 +182,40 @@ For your convienice, create a txt document and save the keys and endpoint in the
         driver: bridge
     ```
 
+  For MacOS users and deactivate Airplay on your laptop to use port 5000
+  ```
+  services:
+  azure-form-recognizer-read:
+    platform: linux/x86_64
+    container_name: azure-form-recognizer-read
+    image: mcr.microsoft.com/azure-cognitive-services/form-recognizer/read-3.1
+    environment:
+      - EULA=accept
+      - billing=<document-intelligence-endpoint>
+      - apiKey=<document-intelligence-key>
+    ports:
+      - "5000:5000"
+    networks:
+      - ocrvnet
+
+  textanalytics:
+    platform: linux/x86_64
+    image: mcr.microsoft.com/azure-cognitive-services/textanalytics/summarization:cpu
+    environment:
+      - eula=accept
+      - rai_terms=accept
+      - billing=<language-endoint>
+      - apikey=<language-key>
+    volumes:
+      - "/user/Mac path to ExtractiveModel"
+    ports:
+      - "5001:5000"
+
+networks:
+  ocrvnet:
+    driver: bridge
+ ```
+
 8. Create the container by running:
     ```sh
     docker-compose up
@@ -315,6 +349,7 @@ Project Link: [AIKnowlEDGE](https://learn.microsoft.com/en-us/azure/ai-services/
 [Ollama-url]: https://ollama.com
 [Azure-logo]: https://img.shields.io/badge/azure-0089D6?style=for-the-badge&logo=azure&logoColor=white
 [Azure-url]: https://azure.microsoft.com/en-us/
+
 
 
 
